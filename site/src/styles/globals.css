@@ -1,0 +1,140 @@
+@import "tailwindcss";
+
+/* ─── Fontes (self-hosted, variable, subset latin) ─────────
+   Montserrat: mesma família geométrica do wordmark do cartão de visita.
+   Inter: leitura de corpo de texto.
+──────────────────────────────────────────────────────────── */
+@font-face {
+  font-family: "Montserrat";
+  src: url("/fonts/montserrat-latin-var.woff2") format("woff2");
+  font-weight: 300 700;
+  font-style: normal;
+  font-display: swap;
+}
+
+@font-face {
+  font-family: "Inter";
+  src: url("/fonts/inter-latin-var.woff2") format("woff2");
+  font-weight: 400 600;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ─── Theme ────────────────────────────────────────────────
+   Valores replicados exatamente de .lvks/products/lab3d-brand.md.
+   Não alterar aqui sem alterar o documento de marca primeiro.
+
+   Regras de contraste (medidas, WCAG 2.x):
+   - text-muted ≈ 3.1:1 → só texto decorativo ou grande (≥ 24px).
+   - accent-light: 4.7:1 sobre bg, 4.4:1 sobre bg-surface → texto
+     pequeno em accent-light apenas sobre bg; em cards, só ≥ 18px.
+   - accent nunca em texto corrido (3.4:1).
+   - text-primary sobre accent: 5.2:1 → ok para botões.
+──────────────────────────────────────────────────────────── */
+@theme {
+  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+
+  /* Escala tipográfica do ecossistema: 12/14/16/18/20/24/28/32/48 */
+  --text-3xl: 1.75rem;
+  --text-3xl--line-height: 1.2;
+  --text-4xl: 2rem;
+  --text-4xl--line-height: 1.15;
+  --text-5xl: 3rem;
+  --text-5xl--line-height: 1.1;
+
+  /* Backgrounds */
+  --color-bg: #08080d;
+  --color-bg-subtle: #0d0d14;
+  --color-bg-surface: #11111a;
+  --color-bg-elevated: #181827;
+
+  /* Bordas */
+  --color-border: rgba(255, 255, 255, 0.07);
+  --color-border-strong: rgba(109, 53, 255, 0.18);
+
+  /* Texto */
+  --color-text-primary: #f4f1ff;
+  --color-text-secondary: #a7a1b8;
+  --color-text-muted: rgba(167, 161, 184, 0.55);
+
+  /* Marca */
+  --color-accent: #6d35ff;
+  --color-accent-light: #8b5cf6;
+  --color-accent-dim: rgba(109, 53, 255, 0.22);
+
+  /* Uso pontual: detalhe digital/clínico — nunca cor de marca, nunca CTA */
+  --color-clinical: #22d3ee;
+
+  --shadow-glow: 0 0 0 1px var(--color-border-strong), 0 12px 40px -12px var(--color-accent-dim);
+}
+
+/* ─── Base ─────────────────────────────────────────────── */
+@layer base {
+  html {
+    background-color: var(--color-bg);
+    color: var(--color-text-primary);
+    font-family: var(--font-body);
+    -webkit-font-smoothing: antialiased;
+    -moz-osx-font-smoothing: grayscale;
+    text-rendering: optimizeLegibility;
+    /* Sticky header height (64px) + breathing room */
+    scroll-padding-top: 5rem;
+  }
+
+  @media (prefers-reduced-motion: no-preference) {
+    html {
+      scroll-behavior: smooth;
+    }
+  }
+
+  body {
+    min-height: 100dvh;
+  }
+
+  ::selection {
+    background-color: var(--color-accent);
+    color: var(--color-text-primary);
+  }
+
+  :focus-visible {
+    outline: 2px solid var(--color-accent-light);
+    outline-offset: 2px;
+    border-radius: 4px;
+  }
+}
+
+/* ─── Utilities ────────────────────────────────────────── */
+
+/* Esfera violeta do cartão de visita: iluminada pela borda externa,
+   escurecendo em direção ao conteúdo. */
+@utility brand-sphere {
+  border-radius: 9999px;
+  background: radial-gradient(
+    circle at 78% 50%,
+    #7a45ff 0%,
+    var(--color-accent) 28%,
+    #4a1fd1 52%,
+    #22106a 76%,
+    #110a2e 100%
+  );
+  box-shadow:
+    inset 24px 0 48px -24px rgba(139, 92, 246, 0.6),
+    0 0 120px -20px var(--color-accent-dim);
+}
+
+/* Malha técnica discreta, como uma área de trabalho de CAD. */
+@utility tech-grid {
+  background-image:
+    linear-gradient(to right, var(--color-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
+  background-size: 64px 64px;
+}
+
+/* Barra curta sob títulos — mesmo gesto do traço sob o nome no cartão. */
+@utility accent-rule {
+  display: block;
+  width: 2rem;
+  height: 2px;
+  background-color: var(--color-accent);
+}

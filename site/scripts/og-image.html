@@ -1,0 +1,47 @@
+<!doctype html>
+<!--
+  Template da imagem Open Graph (1200×630). Regenerar com:
+  npm run og
+-->
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8" />
+<style>
+  @font-face { font-family: "Montserrat"; src: url("../public/fonts/montserrat-latin-var.woff2") format("woff2"); font-weight: 300 700; }
+  * { margin: 0; box-sizing: border-box; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: #08080d; }
+  body { position: relative; font-family: "Montserrat", sans-serif; color: #f4f1ff; }
+  .grid {
+    position: absolute; inset: 0;
+    background-image:
+      linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);
+    background-size: 64px 64px;
+    -webkit-mask-image: radial-gradient(ellipse at 70% 45%, black 5%, transparent 65%);
+  }
+  .sphere {
+    position: absolute; width: 760px; height: 760px; right: -300px; top: -64px; border-radius: 50%;
+    background: radial-gradient(circle at 78% 50%, #7a45ff 0%, #6d35ff 28%, #4a1fd1 52%, #22106a 76%, #110a2e 100%);
+    box-shadow: inset 24px 0 48px -24px rgba(139,92,246,0.6), 0 0 120px -20px rgba(109,53,255,0.22);
+  }
+  .content { position: absolute; left: 96px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; }
+  .word { font-size: 120px; font-weight: 300; letter-spacing: -0.02em; line-height: 1; }
+  .word b { font-weight: 400; color: #8b5cf6; }
+  .tag { margin-top: 20px; font-size: 28px; letter-spacing: 0.3em; color: #a7a1b8; }
+  .rule { margin-top: 48px; width: 64px; height: 3px; background: #6d35ff; }
+  .line { margin-top: 28px; font-size: 28px; font-weight: 400; color: #f4f1ff; max-width: 640px; line-height: 1.35; }
+  .mark { position: absolute; left: 96px; top: 72px; width: 40px; height: 40px; }
+</style>
+</head>
+<body>
+  <div class="grid"></div>
+  <div class="sphere"></div>
+  <svg class="mark" viewBox="0 0 48 48" fill="none" stroke="#6d35ff" stroke-width="4.5"><path d="M20 4 5 24l15 20"/><path d="M28 4l15 20-15 20"/><path d="M19 24h22"/></svg>
+  <div class="content">
+    <div class="word">Lab<b>3D</b></div>
+    <div class="tag">Odontologia Digital</div>
+    <div class="rule"></div>
+    <div class="line">Prótese dental com fluxo digital e domínio analógico, para dentistas e consultórios.</div>
+  </div>
+</body>
+</html>

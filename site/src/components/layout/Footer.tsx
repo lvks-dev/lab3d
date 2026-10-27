@@ -45,6 +45,7 @@ export function Footer() {
                 className="text-text-secondary hover:text-text-primary"
               >
                 WhatsApp {CONTACT.phoneDisplay}
+                <span className="sr-only"> (abre em nova aba)</span>
               </a>
             </li>
             <li>

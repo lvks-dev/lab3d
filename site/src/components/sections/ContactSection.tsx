@@ -1,5 +1,5 @@
 import type { FormEvent } from "react";
-import { CONTACT } from "@/lib/constants";
+import { CONTACT, CTA, WHATSAPP_SR_HINT } from "@/lib/constants";
 import { Container } from "@/components/layout/Container";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -29,8 +29,8 @@ function buildMailto(form: HTMLFormElement): string {
 
 const inputClasses =
   "mt-2 block w-full rounded-lg border border-border bg-bg px-4 py-3 text-base text-text-primary " +
-  "placeholder:text-text-secondary/70 transition-colors " +
-  "hover:border-white/15 focus:border-accent-light focus:outline-none focus-visible:outline-none " +
+  "placeholder:text-text-secondary transition-colors " +
+  "hover:border-border-strong focus:border-accent-light focus:outline-none focus-visible:outline-none " +
   "focus:ring-2 focus:ring-accent-dim";
 
 export function ContactSection() {
@@ -47,7 +47,7 @@ export function ContactSection() {
     >
       <div
         aria-hidden="true"
-        className="brand-sphere absolute -bottom-[420px] -left-[320px] -z-10 size-[640px] opacity-30 [mask-image:linear-gradient(to_bottom,black_5%,transparent_33%)]"
+        className="mesh-glow absolute -bottom-[360px] -left-[320px] -z-10 size-[720px]"
       />
 
       <Container className="grid gap-12 lg:grid-cols-2 lg:gap-20">
@@ -71,8 +71,9 @@ export function ContactSection() {
                 size="lg"
                 className="w-full sm:w-auto"
               >
-                <Icon name="whatsapp" size={20} />
-                Conversar no WhatsApp
+                <Icon name="whatsapp" size={16} />
+                {CTA.primary}
+                <span className="sr-only">{WHATSAPP_SR_HINT}</span>
               </Button>
             </div>
 
@@ -95,6 +96,7 @@ export function ContactSection() {
                     className="text-base text-accent-light underline-offset-4 hover:underline"
                   >
                     {CONTACT.phoneDisplay}
+                    <span className="sr-only">{WHATSAPP_SR_HINT}</span>
                   </a>
                 </dd>
               </div>

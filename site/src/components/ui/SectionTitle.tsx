@@ -21,7 +21,7 @@ export function SectionTitle({ index, eyebrow, title, description, id, className
       </p>
       <h2
         id={id}
-        className="mt-4 font-display text-3xl font-normal tracking-tight text-text-primary text-balance md:text-4xl"
+        className="mt-4 font-display text-3xl font-normal tracking-[-0.015em] text-text-primary text-balance md:text-4xl"
       >
         {title}
       </h2>

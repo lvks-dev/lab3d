@@ -1,3 +1,7 @@
+// TODO: substituir LogoMark pelo símbolo final da Lab3D após aprovação e vetorização
+// (ver .lvks/products/lab3d-brand.md para a decisão quando ela acontecer).
+// Não substituir por render de IA — o símbolo final precisa ser desenhado como paths SVG,
+// igual ao atual, não colado de uma imagem gerada.
 import { cn } from "@/lib/utils";
 
 /** Marca gráfica angular do cartão de visita: `<>` com a seta saindo do centro. */
@@ -25,14 +29,14 @@ interface LogoProps {
   showTagline?: boolean;
 }
 
-/** Wordmark "Lab3D" — "3D" na cor de marca, como no cartão. */
+/** Wordmark "Lab3D" — peso 600, "3D" em accent-light (lab3d-brand.md § Pesos tipográficos). */
 export function Logo({ className, showTagline = false }: LogoProps) {
   return (
     <span className={cn("inline-flex items-center gap-3", className)}>
       <LogoMark className="size-7 shrink-0" />
       <span className="flex flex-col leading-none">
-        <span className="font-display text-xl font-normal tracking-tight text-text-primary">
-          Lab<span className="font-medium text-accent-light">3D</span>
+        <span className="font-display text-xl font-semibold tracking-tight text-text-primary">
+          Lab<span className="text-accent-light">3D</span>
         </span>
         {showTagline && (
           <span className="mt-1 font-display text-xs tracking-[0.2em] text-text-secondary">

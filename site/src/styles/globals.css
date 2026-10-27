@@ -1,21 +1,13 @@
 @import "tailwindcss";
 
-/* ─── Fontes (self-hosted, variable, subset latin) ─────────
-   Montserrat: mesma família geométrica do wordmark do cartão de visita.
-   Inter: leitura de corpo de texto.
+/* ─── Fonte (self-hosted, variable, subset latin) ─────────
+   Manrope em display e body — tipografia do Conceito A (Precision Mesh),
+   validado por Ana Beatriz. Ver lab3d-brand.md § Tipografia.
 ──────────────────────────────────────────────────────────── */
 @font-face {
-  font-family: "Montserrat";
-  src: url("/fonts/montserrat-latin-var.woff2") format("woff2");
-  font-weight: 300 700;
-  font-style: normal;
-  font-display: swap;
-}
-
-@font-face {
-  font-family: "Inter";
-  src: url("/fonts/inter-latin-var.woff2") format("woff2");
-  font-weight: 400 600;
+  font-family: "Manrope";
+  src: url("/fonts/manrope-latin-var.woff2") format("woff2");
+  font-weight: 200 800;
   font-style: normal;
   font-display: swap;
 }
@@ -24,16 +16,28 @@
    Valores replicados exatamente de .lvks/products/lab3d-brand.md.
    Não alterar aqui sem alterar o documento de marca primeiro.
 
-   Regras de contraste (medidas, WCAG 2.x):
-   - text-muted ≈ 3.1:1 → só texto decorativo ou grande (≥ 24px).
-   - accent-light: 4.7:1 sobre bg, 4.4:1 sobre bg-surface → texto
-     pequeno em accent-light apenas sobre bg; em cards, só ≥ 18px.
-   - accent nunca em texto corrido (3.4:1).
-   - text-primary sobre accent: 5.2:1 → ok para botões.
+   Contraste medido (WCAG 2.x; rodada 2 auditou texto de 12–14px nos
+   fundos reais, incluindo camadas translúcidas):
+   - text-primary: 18.0 (bg) / 16.9 (surface) / 15.7 (elevated).
+   - text-secondary: 8.0 (bg) / 7.8 (bg-subtle) / 7.5 (surface) / 7.0
+     (elevated) → texto corrido em qualquer fundo. No card de fluxo do
+     hero (surface/80 sobre halo + malha, pior caso): 7.0. Em card de
+     serviço com glow interno de hover: 6.4.
+   - text-secondary com opacidade reduzida: não usar — /70 sobre bg = 4.4
+     (era o placeholder do formulário; agora secondary cheio).
+   - text-muted: ≈ 3.1 em todos → só decorativo ou texto grande (≥ 24px).
+   - accent-light: 4.7 (bg) / 4.6 (bg-subtle) / 4.4 (surface) / 4.1
+     (elevated) / 4.1 (card de fluxo) → texto pequeno em accent-light só
+     sobre bg ou bg-subtle, sem glow atrás (com glow 11%: 4.45). Em cards,
+     só ≥ 18px.
+   - accent: 3.4 (bg) → nunca em texto corrido.
+   - text-primary sobre o gradiente do botão (accent-light → accent →
+     accent-dark): ≥ 4.7 na faixa do texto (30–70% da altura).
+     Não usar brightness no hover: cai para 4.4.
 ──────────────────────────────────────────────────────────── */
 @theme {
-  --font-display: "Montserrat", ui-sans-serif, system-ui, sans-serif;
-  --font-body: "Inter", ui-sans-serif, system-ui, sans-serif;
+  --font-display: "Manrope", ui-sans-serif, system-ui, sans-serif;
+  --font-body: "Manrope", ui-sans-serif, system-ui, sans-serif;
 
   /* Escala tipográfica do ecossistema: 12/14/16/18/20/24/28/32/48 */
   --text-3xl: 1.75rem;
@@ -61,6 +65,7 @@
   /* Marca */
   --color-accent: #6d35ff;
   --color-accent-light: #8b5cf6;
+  --color-accent-dark: #4c1d95;
   --color-accent-dim: rgba(109, 53, 255, 0.22);
 
   /* Uso pontual: detalhe digital/clínico — nunca cor de marca, nunca CTA */
@@ -106,29 +111,72 @@
 
 /* ─── Utilities ────────────────────────────────────────── */
 
-/* Esfera violeta do cartão de visita: iluminada pela borda externa,
-   escurecendo em direção ao conteúdo. */
-@utility brand-sphere {
+/* Halo de profundidade atrás da malha — só tokens de marca, sem hex solto. */
+@utility mesh-glow {
   border-radius: 9999px;
   background: radial-gradient(
-    circle at 78% 50%,
-    #7a45ff 0%,
-    var(--color-accent) 28%,
-    #4a1fd1 52%,
-    #22106a 76%,
-    #110a2e 100%
+    closest-side,
+    var(--color-accent-dim) 0%,
+    color-mix(in oklab, var(--color-accent-dark) 35%, transparent) 45%,
+    transparent 100%
   );
-  box-shadow:
-    inset 24px 0 48px -24px rgba(139, 92, 246, 0.6),
-    0 0 120px -20px var(--color-accent-dim);
 }
 
-/* Malha técnica discreta, como uma área de trabalho de CAD. */
+/* Papel de CAD: malha maior (64px) com nós e diagonal triangular, subdividida em 16px bem tênue. */
 @utility tech-grid {
+  background-image:
+    radial-gradient(
+      circle,
+      color-mix(in oklab, var(--color-accent-light) 60%, transparent) 1.25px,
+      transparent 1.75px
+    ),
+    linear-gradient(
+      to top right,
+      transparent calc(50% - 0.5px),
+      color-mix(in oklab, var(--color-accent-light) 9%, transparent) calc(50% - 0.5px),
+      color-mix(in oklab, var(--color-accent-light) 9%, transparent) calc(50% + 0.5px),
+      transparent calc(50% + 0.5px)
+    ),
+    linear-gradient(to right, var(--color-border) 1px, transparent 1px),
+    linear-gradient(to bottom, var(--color-border) 1px, transparent 1px),
+    linear-gradient(to right, color-mix(in oklab, var(--color-border) 40%, transparent) 1px, transparent 1px),
+    linear-gradient(to bottom, color-mix(in oklab, var(--color-border) 40%, transparent) 1px, transparent 1px);
+  background-size: 64px 64px, 64px 64px, 64px 64px, 64px 64px, 16px 16px, 16px 16px;
+  background-position: -32px -32px, 0 0, 0 0, 0 0, 0 0, 0 0;
+}
+
+/* Micro grid de canto (cards de serviço): subdivisão de 8px esmaecendo a partir do canto. */
+@utility corner-grid {
   background-image:
     linear-gradient(to right, var(--color-border) 1px, transparent 1px),
     linear-gradient(to bottom, var(--color-border) 1px, transparent 1px);
-  background-size: 64px 64px;
+  background-size: 8px 8px;
+  background-position: right -1px top -1px;
+  mask-image: radial-gradient(circle at top right, black 0%, transparent 70%);
+}
+
+/* Borda em gradiente roxo (1px) via máscara — sem elemento extra no DOM. */
+@utility gradient-border {
+  position: relative;
+
+  &::before {
+    content: "";
+    position: absolute;
+    inset: 0;
+    padding: 1px;
+    border-radius: inherit;
+    background: linear-gradient(
+      140deg,
+      color-mix(in oklab, var(--color-accent-light) 60%, transparent) 0%,
+      var(--color-border-strong) 35%,
+      var(--color-border) 65%,
+      var(--color-accent-dim) 100%
+    );
+    mask:
+      linear-gradient(#000 0 0) content-box exclude,
+      linear-gradient(#000 0 0);
+    pointer-events: none;
+  }
 }
 
 /* Barra curta sob títulos — mesmo gesto do traço sob o nome no cartão. */

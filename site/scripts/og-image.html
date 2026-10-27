@@ -2,40 +2,52 @@
 <!--
   Template da imagem Open Graph (1200×630). Regenerar com:
   npm run og
+  Cores: somente tokens de .lvks/products/lab3d-brand.md.
 -->
 <html lang="pt-BR">
 <head>
 <meta charset="utf-8" />
 <style>
-  @font-face { font-family: "Montserrat"; src: url("../public/fonts/montserrat-latin-var.woff2") format("woff2"); font-weight: 300 700; }
+  @font-face { font-family: "Manrope"; src: url("../public/fonts/manrope-latin-var.woff2") format("woff2"); font-weight: 200 800; }
+  :root {
+    --bg: #08080d; --border: rgba(255,255,255,0.07); --text-primary: #f4f1ff; --text-secondary: #a7a1b8;
+    --accent: #6d35ff; --accent-light: #8b5cf6; --accent-dark: #4c1d95; --accent-dim: rgba(109,53,255,0.22);
+  }
   * { margin: 0; box-sizing: border-box; }
-  html, body { width: 1200px; height: 630px; overflow: hidden; background: #08080d; }
-  body { position: relative; font-family: "Montserrat", sans-serif; color: #f4f1ff; }
+  html, body { width: 1200px; height: 630px; overflow: hidden; background: var(--bg); }
+  body { position: relative; font-family: "Manrope", sans-serif; color: var(--text-primary); }
   .grid {
     position: absolute; inset: 0;
+    /* Mirror of the tech-grid utility in src/styles/globals.css. */
     background-image:
-      linear-gradient(to right, rgba(255,255,255,0.07) 1px, transparent 1px),
-      linear-gradient(to bottom, rgba(255,255,255,0.07) 1px, transparent 1px);
-    background-size: 64px 64px;
-    -webkit-mask-image: radial-gradient(ellipse at 70% 45%, black 5%, transparent 65%);
+      radial-gradient(circle, color-mix(in oklab, var(--accent-light) 60%, transparent) 1.25px, transparent 1.75px),
+      linear-gradient(to top right, transparent calc(50% - 0.5px), color-mix(in oklab, var(--accent-light) 9%, transparent) calc(50% - 0.5px), color-mix(in oklab, var(--accent-light) 9%, transparent) calc(50% + 0.5px), transparent calc(50% + 0.5px)),
+      linear-gradient(to right, var(--border) 1px, transparent 1px),
+      linear-gradient(to bottom, var(--border) 1px, transparent 1px),
+      linear-gradient(to right, color-mix(in oklab, var(--border) 40%, transparent) 1px, transparent 1px),
+      linear-gradient(to bottom, color-mix(in oklab, var(--border) 40%, transparent) 1px, transparent 1px);
+    background-size: 64px 64px, 64px 64px, 64px 64px, 64px 64px, 16px 16px, 16px 16px;
+    background-position: -32px -32px, 0 0, 0 0, 0 0, 0 0, 0 0;
+    -webkit-mask-image: radial-gradient(ellipse at 75% 45%, black 5%, transparent 60%);
   }
-  .sphere {
-    position: absolute; width: 760px; height: 760px; right: -300px; top: -64px; border-radius: 50%;
-    background: radial-gradient(circle at 78% 50%, #7a45ff 0%, #6d35ff 28%, #4a1fd1 52%, #22106a 76%, #110a2e 100%);
-    box-shadow: inset 24px 0 48px -24px rgba(139,92,246,0.6), 0 0 120px -20px rgba(109,53,255,0.22);
+  .glow {
+    position: absolute; width: 900px; height: 900px; right: -380px; top: -140px; border-radius: 50%;
+    background: radial-gradient(closest-side, var(--accent-dim) 0%, color-mix(in oklab, var(--accent-dark) 35%, transparent) 45%, transparent 100%);
   }
+  .mesh { position: absolute; width: 640px; height: 640px; right: -150px; top: -5px; color: var(--accent-light); }
   .content { position: absolute; left: 96px; top: 0; bottom: 0; display: flex; flex-direction: column; justify-content: center; }
-  .word { font-size: 120px; font-weight: 300; letter-spacing: -0.02em; line-height: 1; }
-  .word b { font-weight: 400; color: #8b5cf6; }
-  .tag { margin-top: 20px; font-size: 28px; letter-spacing: 0.3em; color: #a7a1b8; }
-  .rule { margin-top: 48px; width: 64px; height: 3px; background: #6d35ff; }
-  .line { margin-top: 28px; font-size: 28px; font-weight: 400; color: #f4f1ff; max-width: 640px; line-height: 1.35; }
+  .word { font-size: 120px; font-weight: 600; letter-spacing: -0.03em; line-height: 1; }
+  .word b { font-weight: 600; color: var(--accent-light); }
+  .tag { margin-top: 20px; font-size: 28px; letter-spacing: 0.3em; color: var(--text-secondary); }
+  .rule { margin-top: 48px; width: 64px; height: 3px; background: linear-gradient(to right, var(--accent-light), var(--accent), var(--accent-dark)); }
+  .line { margin-top: 28px; font-size: 28px; font-weight: 400; max-width: 620px; line-height: 1.35; }
   .mark { position: absolute; left: 96px; top: 72px; width: 40px; height: 40px; }
 </style>
 </head>
 <body>
   <div class="grid"></div>
-  <div class="sphere"></div>
+  <div class="glow"></div>
+  <svg class="mesh" id="mesh" viewBox="-104 -104 208 208" fill="none"></svg>
   <svg class="mark" viewBox="0 0 48 48" fill="none" stroke="#6d35ff" stroke-width="4.5"><path d="M20 4 5 24l15 20"/><path d="M28 4l15 20-15 20"/><path d="M19 24h22"/></svg>
   <div class="content">
     <div class="word">Lab<b>3D</b></div>
@@ -43,5 +55,40 @@
     <div class="rule"></div>
     <div class="line">Prótese dental com fluxo digital e domínio analógico, para dentistas e consultórios.</div>
   </div>
+  <script>
+    // Mirror of buildMesh() in src/components/ui/MeshSphere.tsx — keep both in sync.
+    const R = 100, RINGS = 9, SEG = 20, TX = (-22 * Math.PI) / 180, TY = (28 * Math.PI) / 180;
+    const rot = ([x, y, z]) => {
+      const x1 = x * Math.cos(TY) + z * Math.sin(TY), z1 = -x * Math.sin(TY) + z * Math.cos(TY);
+      return [x1, y * Math.cos(TX) - z1 * Math.sin(TX), y * Math.sin(TX) + z1 * Math.cos(TX)];
+    };
+    const v = [rot([0, -R, 0])];
+    for (let r = 1; r <= RINGS; r++) {
+      const phi = (r / (RINGS + 1)) * Math.PI;
+      for (let s = 0; s < SEG; s++) {
+        const t = (s / SEG) * Math.PI * 2;
+        v.push(rot([R * Math.sin(phi) * Math.cos(t), -R * Math.cos(phi), R * Math.sin(phi) * Math.sin(t)]));
+      }
+    }
+    const south = v.push(rot([0, R, 0])) - 1;
+    const at = (r, s) => 1 + (r - 1) * SEG + (s % SEG);
+    const e = [];
+    for (let r = 1; r <= RINGS; r++) for (let s = 0; s < SEG; s++) {
+      e.push([at(r, s), at(r, s + 1)]);
+      if (r === 1) e.push([0, at(r, s)]);
+      if (r === RINGS) e.push([at(r, s), south]);
+      else { e.push([at(r, s), at(r + 1, s)]); e.push([at(r, s), at(r + 1, s + 1)]); }
+    }
+    const b = { front: "", side: "", back: "" };
+    for (const [i, j] of e) {
+      const d = (v[i][2] + v[j][2]) / 2 / R;
+      const k = d > 0.3 ? "front" : d > -0.3 ? "side" : "back";
+      b[k] += `M${v[i][0].toFixed(1)} ${v[i][1].toFixed(1)}L${v[j][0].toFixed(1)} ${v[j][1].toFixed(1)}`;
+    }
+    const op = { back: 0.08, side: 0.2, front: 0.43 };
+    let svg = Object.entries(b).map(([k, d]) => `<path d="${d}" stroke="currentColor" stroke-opacity="${op[k]}" vector-effect="non-scaling-stroke"/>`).join("");
+    svg += v.filter((p) => p[2] / R > 0.45).map(([x, y]) => `<circle cx="${x.toFixed(1)}" cy="${y.toFixed(1)}" r="0.6" fill="currentColor" fill-opacity="0.8"/>`).join("");
+    document.getElementById("mesh").innerHTML = svg;
+  </script>
 </body>
 </html>

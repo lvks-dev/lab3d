@@ -1,5 +1,5 @@
 import { useEffect, useState } from "react";
-import { CONTACT, NAV_LINKS } from "@/lib/constants";
+import { CONTACT, CTA, NAV_LINKS, WHATSAPP_SR_HINT } from "@/lib/constants";
 import { cn } from "@/lib/utils";
 import { Button } from "@/components/ui/Button";
 import { Icon } from "@/components/ui/Icon";
@@ -69,11 +69,12 @@ export function Header() {
             href={CONTACT.whatsappUrl}
             target="_blank"
             rel="noopener noreferrer"
+            variant="soft"
             size="sm"
             className="hidden sm:inline-flex"
           >
-            <Icon name="whatsapp" size={16} />
-            WhatsApp
+            {CTA.primary}
+            <span className="sr-only">{WHATSAPP_SR_HINT}</span>
           </Button>
 
           <button
@@ -116,8 +117,8 @@ export function Header() {
             className="mt-4 w-full"
             onClick={closeMenu}
           >
-            <Icon name="whatsapp" size={18} />
-            Conversar no WhatsApp
+            {CTA.primary}
+            <span className="sr-only">{WHATSAPP_SR_HINT}</span>
           </Button>
         </Container>
       </nav>
